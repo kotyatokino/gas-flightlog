@@ -2,19 +2,40 @@
  * Google Apps Script for handling flight records
  * This script receives POST requests with location data and logs them to a spreadsheet
  */
-
+function posttest(){
+  const e = {"location":{"value":"-122.084,37.4219983"},
+             "drone":"tmapex4s","sheetid":"a-N80oKGzIvgJYD4_BbmW6S_GF8mfAGIyW9o_8-OxV4","ext1":"","ext2":"","ext3":""};
+  
+  const a = doPost(e);
+  
+}
+function gettest(){
+  const e = {
+    parameter:{"sheetid":"a-N80oKGzIvgJYD4_BbmW6S_GF8mfAGIyW9o_8-OxV4"}
+  }
+  const a = doGet(e);
+  
+}
 function doGet(e) {
   try{
     Logger.log(e);
+  
+    if(e == null){
+      Logger.log("e is null")
+      return createJsonResponse({error:"gパラメータeがありません"})
+    }
+    
+    if(!("parameter" in e)){
+      return createJsonResponse({ error: "gパラメータがありません" });
+    }
+    if (!("sheetid" in e.parameter)) {
+      return createJsonResponse({ error: "gシートIDが指定されていません" });
+    }
     var sheetid = e.parameter.sheetid;
     Logger.log(sheetid);
     
-    if (!sheetid) {
-      return createJsonResponse({ error: "スプレッドシートIDが指定されていません" });
-    }
-    
     const result = getFlightState(sheetid);
-    
+    Logger.log(result);
     // Return appropriate response
     if (result.error) {
       return createJsonResponse({ error: result.error });
@@ -23,7 +44,7 @@ function doGet(e) {
     
   } catch (error) {
     Logger.log("Error in doGet: " + error.toString());
-    return createJsonResponse({ error: "サーバーエラー: " + error.message });
+    return createJsonResponse({ error: "gサーバーエラー: " + error.message });
   }
 }
 
@@ -34,16 +55,18 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
+    Logger.log(e);
     // Parse the POST data
     const params = JSON.parse(e.postData.getDataAsString());
     
     // Validate required parameters
     if (!params.location || !params.location.value) {
-      return createJsonResponse({ error: "位置情報がありません" });
+      //ContentService.createTextOutput()
+      return createJsonResponse({ error: "post位置情報がありません" });
     }
     
     if (!params.sheetid) {
-      return createJsonResponse({ error: "スプレッドシートIDが指定されていません" });
+      return createJsonResponse({ error: "postシートIDが指定されていません" });
     }
     
     // Process the log entry
@@ -58,7 +81,7 @@ function doPost(e) {
     
   } catch (error) {
     Logger.log("Error in doPost: " + error.toString());
-    return createJsonResponse({ error: "サーバーエラーが発生しました: " + error.message });
+    return createJsonResponse({ error: "postサーバーエラー: " + error.message });
   }
 }
 
@@ -148,11 +171,16 @@ function getLastRow(sheet, column) {
 
 function getFlightState(sheetid){
    try {
-    const strSheetID = sheetid;
     
     // Get the spreadsheet and sheet
     const sheetName = "飛行日誌";
-    const spreadsheet = SpreadsheetApp.openById(strSheetID);
+    var spreadsheet = undefined;
+    try{
+      spreadsheet = SpreadsheetApp.openById(sheetid);
+    }catch( error ){
+      Logger.log("cant open sheet")
+      return {error:"シート「" + sheetid + "」が見つかりません"}
+    }
     const sheet = spreadsheet.getSheetByName(sheetName);
     
     
@@ -194,7 +222,13 @@ function addLog(params) {
     
     // Get the spreadsheet and sheet
     const sheetName = "飛行日誌";
-    const spreadsheet = SpreadsheetApp.openById(strSheetID);
+    var spreadsheet = undefined;
+    try{
+      spreadsheet = SpreadsheetApp.openById(strSheetID.trim());
+    }catch (err){
+      Logger.log("cant open sheet")
+      return {error:"指定されたシートが開けませんでした"}
+    }
     const sheet = spreadsheet.getSheetByName(sheetName);
     
     if (!sheet) {
