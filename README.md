@@ -1,6 +1,7 @@
 # gas-flightlog
 Google app script version of  drone flight record for japanese law.
-Googleスプレッドシートで作られた飛行日誌にスマホから書き込むためのインターフェイスとなるプログラムです。もともとドローンユーザのASAKICHIさんが、作成された物を転用して高機能化しました。
+`6/16にコード.jsを更新しました。更新してください`
+もともとドローンユーザのASAKICHIさんが、作成された物を転用して高機能化しました。
 シートを持ってきて、上記のコード.jsをGoogleAppScriptとして登録・公開（デプロイ）するとスマホから利用できます。操作方法は   [【プチプログラミング/ドローン】飛行日誌・入力簡易ツール作ってみた!!【法改正/航空法](https://www.youtube.com/watch?v=WLDBWHJxHiI)あたりをご覧ください。
 
 
