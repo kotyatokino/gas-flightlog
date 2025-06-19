@@ -4,6 +4,13 @@ Google app script version of  drone flight record for japanese law.
 もともとドローンユーザのASAKICHIさんが、作成された物を転用して高機能化しました。
 シートを持ってきて、上記のコード.jsをGoogleAppScriptとして登録・公開（デプロイ）するとスマホから利用できます。操作方法は   [【プチプログラミング/ドローン】飛行日誌・入力簡易ツール作ってみた!!【法改正/航空法](https://www.youtube.com/watch?v=WLDBWHJxHiI)あたりをご覧ください。
 
+## 一度やったことある人が思い出すようショートカットメモ
+1. AKAKICHIさんのシートを自分のドラブに複製
+2. URL中のシートIDをメモ
+3. このページの上の方の「コード.js」を自分のGoogleドライブに新規作成したAppScriptにペーストする
+4. 作成したAppScriptをデプロイし、デプロイ（実行出来るよう公開）のURLをメモする
+5. 機体情報等を埋めておく
+6. スマホアプリから、機体ごとに設定を作成し、シートIDやAppScriptのデプロイURL、機体名称を設定する。
 
 ## オリジナルとの違い
 
