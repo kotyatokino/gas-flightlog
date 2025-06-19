@@ -1,4 +1,4 @@
-# gas-flightlog
+# gas-flightlog 6/16更新
 Google app script version of  drone flight record for japanese law.
 `6/16にコード.jsを更新しました。更新してください`
 もともとドローンユーザのASAKICHIさんが、作成された物を転用して高機能化しました。
